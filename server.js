@@ -15,7 +15,7 @@ function dateLogger(req, res, next) {//three amigos
 
 
 function gateKeeper(req, res, next) {
-	//new way of reading data sent by the client, data can come in the body  in the url params, and the query string, and the headers
+	//new way of reading data sent by the client, data can come in the body  in the url params, and the query string, and the headers//custom functions don't get invoked by ()
 	const password = req.headers.password || '';
 	if (!password) {
 		res.status(400).json({ you: `I need a password!!!` })
@@ -31,12 +31,12 @@ function gateKeeper(req, res, next) {
 
 //global middleware
 
-server.use(dateLogger());
+server.use(dateLogger);
 
 server.use(morgan('dev'))
 //middlware only used in certain cases, restricting scope
 server.use('/api/hubs', hubsRouter);
-
+server.use(gateKeeper)
 server.get('/', (req, res) => {//req, res the homies
 	const nameInsert = (req.name) ? ` ${req.name}` : '';
 
