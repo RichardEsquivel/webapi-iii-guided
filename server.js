@@ -5,15 +5,16 @@ const hubsRouter = require('./hubs/hubs-router.js');
 
 const server = express();
 
-function dateLogger(req, res, next) {//three amigos
+function dateLoggerAndMethod(req, res, next) {//three amigos
 	console.log(new Date().toISOString());
 	console.log(`${req.baseURL}`)
-	console.log(`{req.method}`);
+	console.log(`${req.method}`);
 	next();
 }
 //global middleware
 server.use(helmet());//third party
 server.use(express.json());//built-in
+server.use(dateLoggerAndMethod);
 
 //middlware only used in certain cases, restricting scope
 server.use('/api/hubs', hubsRouter);
